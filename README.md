@@ -1,1 +1,3 @@
-# trab_sistemas_operacionais_II_gb
+# Trabalho Sistemas Operacionais II - GB
+
+Aluno: Bruno da Siqueira Hoffmann
