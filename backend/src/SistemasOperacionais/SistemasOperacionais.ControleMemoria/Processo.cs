@@ -1,4 +1,6 @@
-﻿namespace SistemasOperacionais.ControleMemoria
+﻿using System;
+
+namespace SistemasOperacionais.ControleMemoria
 {
     public class Processo
     {
@@ -7,6 +9,11 @@
 
         public void Executar() { 
             
+        }
+
+        internal Pagina ObterPagina()
+        {
+            throw new NotImplementedException();
         }
     }
 }

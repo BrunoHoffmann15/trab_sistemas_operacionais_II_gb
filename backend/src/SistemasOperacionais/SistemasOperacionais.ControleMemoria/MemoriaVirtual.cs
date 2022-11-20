@@ -3,7 +3,7 @@
     public class MemoriaVirtual
     {
         public int Tamanho { get; private set; }
-        public Pagina[] Paginas;
+        private Pagina[] Paginas;
 
         public MemoriaVirtual()
         {
@@ -14,6 +14,16 @@
 
         public void AdicionarProcesso(Processo processo) 
         {
+        }
+
+        public int ObterIndicePagina(Pagina pagina) 
+        {
+            return 0;
+        }
+
+        public Pagina ObterPagina(int indicePagina) 
+        {
+            return Paginas[indicePagina];
         }
     }
 }

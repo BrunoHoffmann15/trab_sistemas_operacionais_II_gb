@@ -9,7 +9,7 @@ namespace SistemasOperacionais.ControleMemoria.Constants
     public class MemoriaConstants
     {
         public const int TamanhoMemoriaVirtual = 1024;
-        public const int TamanhoMemoriaFisica = 8;
+        public const int TamanhoMemoriaFisica = 64;
         public const int TamanhoPagina = 8;
 
         public const int QuantidadePaginaMemoriaFisica = TamanhoMemoriaFisica / TamanhoPagina;
