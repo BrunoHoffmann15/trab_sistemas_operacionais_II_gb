@@ -1,45 +1,60 @@
-﻿namespace SistemasOperacionais.ControleMemoria
+﻿using SistemasOperacionais.ControleMemoria.Constants;
+
+namespace SistemasOperacionais.ControleMemoria
 {
     public class MMU
     {
-        private readonly static MemoriaFisica _memoriaFisica;
-        private readonly static MemoriaVirtual _memoriaVirtual;
-        private readonly static RegistroTabelaPagina[] _tabelaPaginas;
+        public MemoriaFisica MemoriaFisica { get; private set; }
+        public MemoriaVirtual MemoriaVirtual { get; private set; }
 
-        static MMU() {
-            _memoriaFisica = new MemoriaFisica();
-            _memoriaVirtual = new MemoriaVirtual();
+        public RegistroTabelaPagina[] TabelaPaginas { get; private set; }
+
+        public MMU() {
+            MemoriaFisica = new MemoriaFisica(MemoriaConstants.TamanhoMemoriaFisica);
+            MemoriaVirtual = new MemoriaVirtual(MemoriaConstants.TamanhoMemoriaVirtual);
+            TabelaPaginas = new RegistroTabelaPagina[MemoriaVirtual.QuantidadePaginas];
+
+            InicializarTabelaPaginas();
         }
 
-        public static void AdicionarProcessor(Processo processo)
-        {
-            _memoriaVirtual.AdicionarProcesso(processo);
+        private void InicializarTabelaPaginas() {
+            for (int i = 0; i < TabelaPaginas.Length; i++) 
+            {
+                TabelaPaginas[i] = new RegistroTabelaPagina();
+            }
         }
 
-        public static void ExecutarProcesso(Processo processo)
+        public void AdicionarProcesso(Processo processo)
         {
-            Pagina pagina = processo.ObterPagina();
-            int indicePagina = _memoriaVirtual.ObterIndicePagina(pagina);
+            MemoriaVirtual.AdicionarProcesso(processo);
+        }
 
-            if (!_tabelaPaginas[indicePagina].Bit)
+        public void ExecutarProcesso(Processo processo) 
+        {
+            ExecutarProcesso(processo, processo.ObterPaginaAleatoria());
+        }
+
+        public void ExecutarProcesso(Processo processo, string identificadorPagina)
+        {
+            int indicePagina = MemoriaVirtual.ObterIndicePagina(identificadorPagina);
+
+            if (!TabelaPaginas[indicePagina].Bit)
             {
                 AdicionarPaginaMemoriaFisica(indicePagina);
             }
 
-            Pagina paginaMemoriaFisica = _memoriaFisica.ObterPagina(_tabelaPaginas[indicePagina].EnderecoMemoriaFisica);
-            paginaMemoriaFisica.Acessar();
-            
-            processo.Executar();
+            var paginaMemoriaFisica = MemoriaFisica.ObterPagina(TabelaPaginas[indicePagina].EnderecoMemoriaFisica); 
+            processo.Executar(paginaMemoriaFisica);
         }
 
-        private static void AdicionarPaginaMemoriaFisica(int indicePagina) 
+        private void AdicionarPaginaMemoriaFisica(int indicePagina) 
         {
             var registroPagina = new RegistroTabelaPagina();
 
-            int indiceDisponivel = _memoriaFisica.FazerSwapIn(_memoriaVirtual.ObterPagina(indicePagina));
+            int indiceDisponivel = MemoriaFisica.FazerSwapIn(MemoriaVirtual.ObterPagina(indicePagina));
 
-            registroPagina.AtualizarEnderecoMemoria(indiceDisponivel);
-            _tabelaPaginas[indicePagina] = registroPagina;
+            registroPagina.AtualizarEnderecoMemoriaFisica(indiceDisponivel);
+            TabelaPaginas[indicePagina] = registroPagina;
         }
     }
 }

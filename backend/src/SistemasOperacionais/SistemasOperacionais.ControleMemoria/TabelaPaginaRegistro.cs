@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SistemasOperacionais.ControleMemoria
+﻿namespace SistemasOperacionais.ControleMemoria
 {
     public class RegistroTabelaPagina
     {
@@ -17,7 +11,7 @@ namespace SistemasOperacionais.ControleMemoria
 
         public int EnderecoMemoriaFisica { get; private set; }
 
-        public void AtualizarEnderecoMemoria(int enderecoMemoria) 
+        public void AtualizarEnderecoMemoriaFisica(int enderecoMemoria) 
         {
             EnderecoMemoriaFisica = enderecoMemoria;
             Bit = true;

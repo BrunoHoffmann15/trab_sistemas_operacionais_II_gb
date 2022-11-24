@@ -1,16 +1,22 @@
-﻿namespace SistemasOperacionais.ControleMemoria
+﻿using System.Collections.Generic;
+
+namespace SistemasOperacionais.ControleMemoria
 {
     public class MemoriaFisica
     {
         public int Tamanho { get; private set; }
         public int QuantidadePaginas { get; private set; }
-        public int UltimaPagina { get; private set; }
+        public Pagina[] Paginas { get; private set; }
 
-        public Pagina[] Paginas;
+        private readonly Queue<int> _paginas = new();
+        private int indiceFilaPrimeiroAtual = 0;
 
-        public MemoriaFisica()
+        public MemoriaFisica(int tamanho)
         {
-            Paginas = new Pagina[2];
+            indiceFilaPrimeiroAtual = 0;
+
+            QuantidadePaginas = Pagina.ObterQuantidadePaginasPorTamanho(tamanho);
+            Paginas = new Pagina[QuantidadePaginas];
         }
 
         public Pagina ObterPagina(int indicePagina) 
@@ -33,7 +39,7 @@
 
         private int ObterIndiceDisponivel()
         {
-            for (int i = 0; i < Paginas.Length; i++) {
+            for (int i = 0; i < QuantidadePaginas; i++) {
                 if (Paginas[i] == null) return i;
             }
 
@@ -42,9 +48,16 @@
 
         private int FazerSwapOut() 
         {
+            int indiceLiberado = indiceFilaPrimeiroAtual;
+            
+            Paginas[indiceLiberado] = null;
 
-            // TODO: Adicionar lógica para remover fila.
-            return 0;
+            indiceFilaPrimeiroAtual++;
+
+            if (indiceFilaPrimeiroAtual == QuantidadePaginas)
+                indiceFilaPrimeiroAtual = 0;
+
+            return indiceLiberado;
         }
     }
 }
