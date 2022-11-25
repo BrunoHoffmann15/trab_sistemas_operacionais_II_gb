@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using SistemasOperacionais.ControleMemoria.Api.Models;
 using SistemasOperacionais.ControleMemoria.Api.Repositories;
 

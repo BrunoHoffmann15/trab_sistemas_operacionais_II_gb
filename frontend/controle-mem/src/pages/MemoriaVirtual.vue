@@ -78,8 +78,6 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'PageMemoriaVirtual',
   beforeMount() {
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-    axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
     axios
       .get('https://localhost:44306/api/MemoriaVirtual')
       .then(response => {

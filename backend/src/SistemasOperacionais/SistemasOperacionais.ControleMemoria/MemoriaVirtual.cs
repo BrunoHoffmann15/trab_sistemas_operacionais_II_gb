@@ -57,7 +57,7 @@ namespace SistemasOperacionais.ControleMemoria
 
         private bool PossuiPaginasSuficientes(int quantidadePaginasProcesso) 
         {
-            return QuantidadePaginas - ObterQuantidadePaginasUsadas() - quantidadePaginasProcesso >= 0;
+            return QuantidadePaginas - PaginasUsadas - quantidadePaginasProcesso >= 0;
         }
     }
 }

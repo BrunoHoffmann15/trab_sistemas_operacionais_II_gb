@@ -4,6 +4,7 @@
     {
         public int Tamanho { get; private set; }
         public int QuantidadePaginas { get; private set; }
+        public int PaginasUsadas { get; private set; }
         public Pagina[] Paginas { get; private set; }
 
         private int indiceFilaPrimeiroAtual = 0;
@@ -11,6 +12,7 @@
         public MemoriaFisica(int tamanho)
         {
             indiceFilaPrimeiroAtual = 0;
+            PaginasUsadas = 0;
             Tamanho = tamanho;
 
             QuantidadePaginas = Pagina.ObterQuantidadePaginasPorTamanho(tamanho);
@@ -31,6 +33,7 @@
             }
 
             Paginas[indiceDisponivel] = pagina;
+            PaginasUsadas++;
 
             return indiceDisponivel;
         }
@@ -46,6 +49,8 @@
 
         private int FazerSwapOut() 
         {
+            PaginasUsadas--;
+
             int indiceLiberado = indiceFilaPrimeiroAtual;
             
             Paginas[indiceLiberado] = null;

@@ -2,6 +2,7 @@
 using SistemasOperacionais.ControleMemoria.Api.Models;
 using SistemasOperacionais.ControleMemoria.Api.Repositories;
 using System;
+using System.Collections.Generic;
 
 namespace SistemasOperacionais.ControleMemoria.Api.Controllers
 {
@@ -12,14 +13,14 @@ namespace SistemasOperacionais.ControleMemoria.Api.Controllers
         private readonly ProcessoRepository _processoRepository;
         private readonly MMURepository _mmuRepository;
 
-        public ProcessoController(ProcessoRepository processoRepository, MMURepository mmuRepository) 
+        public ProcessoController(ProcessoRepository processoRepository, MMURepository mmuRepository)
         {
             _processoRepository = processoRepository;
             _mmuRepository = mmuRepository;
         }
 
         [HttpGet("{id}")]
-        public RespostaBase<Processo> ObterProcesso(string id) 
+        public RespostaBase<Processo> ObterProcesso(string id)
         {
             var processo = _processoRepository.ObterPorId(id);
             return new RespostaBase<Processo>(processo);
@@ -36,7 +37,7 @@ namespace SistemasOperacionais.ControleMemoria.Api.Controllers
                 _mmuRepository.CriarProcesso(processo);
 
                 return new RespostaBase<Processo>(processo);
-            } 
+            }
             catch (Exception ex)
             {
                 return new RespostaBase<Processo>(null, ex.Message);
@@ -44,14 +45,14 @@ namespace SistemasOperacionais.ControleMemoria.Api.Controllers
         }
 
         [HttpPost("{id}/executar")]
-        public RespostaBase<Processo> ExecutarProcesso(string id) 
-        { 
+        public RespostaBase<Processo> ExecutarProcesso(string id)
+        {
             try
             {
                 var processo = _processoRepository.ObterPorId(id);
                 _mmuRepository.ExecutarProcesso(processo);
                 return new RespostaBase<Processo>(processo);
-            } 
+            }
             catch (Exception ex)
             {
                 return new RespostaBase<Processo>(null, ex.Message);
@@ -71,6 +72,13 @@ namespace SistemasOperacionais.ControleMemoria.Api.Controllers
             {
                 return new RespostaBase<Processo>(null, ex.Message);
             }
+        }
+
+        [HttpGet]
+        public RespostaBase<List<Processo>> ListarProcessos()
+        {
+            var processos = _processoRepository.Listar();
+            return new RespostaBase<List<Processo>>(processos);
         }
     }
 }

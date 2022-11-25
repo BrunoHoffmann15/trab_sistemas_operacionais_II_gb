@@ -34,7 +34,7 @@ namespace SistemasOperacionais.ControleMemoria
 
             for (int i = 0; i < QuantidadePaginas; i++)
             {
-                var pagina = new Pagina(Guid.NewGuid().ToString());
+                var pagina = new Pagina(Guid.NewGuid().ToString(), Identificador);
 
                 paginas[i] = pagina;
 

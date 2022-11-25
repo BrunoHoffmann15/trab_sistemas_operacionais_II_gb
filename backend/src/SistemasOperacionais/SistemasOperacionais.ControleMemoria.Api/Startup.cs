@@ -22,12 +22,13 @@ namespace SistemasOperacionais.ControleMemoria.Api
             Configuration = configuration;
         }
 
+        private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -36,6 +37,16 @@ namespace SistemasOperacionais.ControleMemoria.Api
 
             services.AddSingleton<ProcessoRepository>();
             services.AddSingleton<MMURepository>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:8080",
+                                                          "http://localhost:*");
+                                  });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,13 +62,14 @@ namespace SistemasOperacionais.ControleMemoria.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            });   
         }
     }
 }
