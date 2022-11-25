@@ -7,5 +7,7 @@
         public const int TamanhoPagina = 8 * KbParaByte;
 
         public const int KbParaByte = 1000;
+
+        public const int TamanhoMinimoProcesso = 1;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using SistemasOperacionais.ControleMemoria.Constants;
-using System;
+using SistemasOperacionais.ControleMemoria.Exceptions;
 
 namespace SistemasOperacionais.ControleMemoria.UnitTests
 {
@@ -22,7 +22,7 @@ namespace SistemasOperacionais.ControleMemoria.UnitTests
             var processo = new Processo(9000);
             MemoriaVirtual memoriaVirtual = new MemoriaVirtual(8000);
 
-            Assert.Throws<Exception>(() => memoriaVirtual.AdicionarProcesso(processo), "Memória virtual não possui espaço suficiente.");
+            Assert.Throws<DomainException>(() => memoriaVirtual.AdicionarProcesso(processo), "Memória virtual não possui espaço suficiente.");
         }
     }
 }

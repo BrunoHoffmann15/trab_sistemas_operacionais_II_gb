@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SistemasOperacionais.ControleMemoria.Exceptions;
 using System;
 
 namespace SistemasOperacionais.ControleMemoria.UnitTests
@@ -37,10 +38,10 @@ namespace SistemasOperacionais.ControleMemoria.UnitTests
             Assert.AreEqual(125, processo.IdentificadorPaginas.Length);
         }
 
-        [Test(Description = "Deve estoura excessão ao criar processo com tamanho maior que 1 Mbytes")]
+        [Test(Description = "Deve estourar excessão ao criar processo com tamanho maior que 1 Mbytes")]
         public void Deve_CriarProcesso_MaiorQueTamanho1MByte()
         {
-            Assert.Throws<Exception>(() => new Processo(1000001));
+            Assert.Throws<DomainException>(() => new Processo(1000001));
         }
 
         [Test(Description = "Deve criar processos com identificadores diferentes")]

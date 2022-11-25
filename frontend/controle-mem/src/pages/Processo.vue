@@ -20,12 +20,24 @@
       v-model="showDialog"
     >
       <q-card style="width: 700px; max-width: 80vw;">
-        <q-card-section>
-          <div class="text-h6">Medium</div>
-        </q-card-section>
-
         <q-card-section class="q-pt-none">
-          Click/Tap on the backdrop.
+          <div style="padding: 20px">
+            <q-timeline color="secondary">
+              <q-timeline-entry heading>
+                Timeline heading
+              </q-timeline-entry>
+
+              <q-timeline-entry
+                v-for="h in selected[0].historicoProcesso"
+                :title="h.titulo"
+                :subtitle="getFormatDate(h.dataExecucao)"
+              >
+                <div>
+                  {{h.conteudo}}
+                </div>
+              </q-timeline-entry>
+            </q-timeline>
+          </div>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
@@ -45,6 +57,7 @@
 </style>
 
 <script>
+import { date } from 'quasar';
 import axios from 'axios';
 import { defineComponent } from 'vue';
 import { Dialog, Notify } from 'quasar';
@@ -79,6 +92,10 @@ export default defineComponent({
       })
   },
   methods: {
+    getFormatDate(dataExecucao) {
+      return date.formatDate(dataExecucao, 'DD/MM/YYYY - HH:mm:ss');
+    },
+
     verHistorico() {
       this.showDialog = true;
     },

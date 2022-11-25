@@ -40,11 +40,17 @@ namespace SistemasOperacionais.ControleMemoria
 
             if (!TabelaPaginas[indicePagina].Bit)
             {
+                processo.AdicionarHistorico("Swap-in", $"Página {identificadorPagina} do processo não estava na memória física, e fez swap-in.");
                 AdicionarPaginaMemoriaFisica(indicePagina);
+            } 
+            else
+            {
+                processo.AdicionarHistorico("Obter Página", $"Página {identificadorPagina} do processo já estava na memória física.");
             }
 
             var paginaMemoriaFisica = MemoriaFisica.ObterPagina(TabelaPaginas[indicePagina].EnderecoMemoriaFisica); 
             processo.Executar(paginaMemoriaFisica);
+            processo.AdicionarHistorico("Execução", $"Processo teve a página {paginaMemoriaFisica.Identificador} executada com sucesso.");
         }
 
         private void AdicionarPaginaMemoriaFisica(int indicePagina) 

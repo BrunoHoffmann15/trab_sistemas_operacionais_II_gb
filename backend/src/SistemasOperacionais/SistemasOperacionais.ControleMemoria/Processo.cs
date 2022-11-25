@@ -17,12 +17,18 @@ namespace SistemasOperacionais.ControleMemoria
 
         public Processo(int tamanho)
         {
-            if (tamanho > MemoriaConstants.TamanhoMemoriaVirtual)
-                throw new DomainException("Processo ultrapassa tamanho de 1MB");
+            if (tamanho > MemoriaConstants.TamanhoMemoriaVirtual || tamanho < MemoriaConstants.TamanhoMinimoProcesso)
+                throw new DomainException($"Processo deve ter entre {MemoriaConstants.TamanhoMemoriaVirtual} e {MemoriaConstants.TamanhoMinimoProcesso} bytes.");
 
             Tamanho = tamanho;
             Identificador = (++_identificador).ToString();
             HistoricoProcesso = new Stack<HistoricoProcesso>();
+        }
+
+        public void AdicionarHistorico(string titulo, string conteudo)
+        {
+            var historicoProcesso = new HistoricoProcesso(titulo, conteudo);
+            HistoricoProcesso.Push(historicoProcesso);
         }
 
         public Pagina[] CriarPaginas() 
@@ -46,9 +52,7 @@ namespace SistemasOperacionais.ControleMemoria
 
         public void Executar(Pagina pagina) 
         {
-            var historicoProcesso = new HistoricoProcesso(pagina.Conteudo, pagina.Conteudo);
-            HistoricoProcesso.Push(historicoProcesso);
-
+            AdicionarHistorico($"Execução da Página {pagina.Identificador}", $"Retorno: {pagina.Conteudo}");
             pagina.Acessar();
         }
 

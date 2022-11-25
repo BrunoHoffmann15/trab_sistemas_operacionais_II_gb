@@ -38,6 +38,8 @@ namespace SistemasOperacionais.ControleMemoria
                 Paginas[++indiceUltimaPagina] = p;
                 PaginasUsadas++;
             }
+
+            processo.AdicionarHistorico("Processo criado", $"Processo foi criado com {processo.QuantidadePaginas} páginas.");
         }
 
         public int ObterIndicePagina(string identificadorPagina) 
