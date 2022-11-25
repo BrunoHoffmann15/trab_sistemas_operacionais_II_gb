@@ -15,6 +15,7 @@
     <div class="row">
       <q-btn color="primary" label="Adicionar" v-on:click="adicionarNovo"/>
       <q-btn id="historico" text-color="black" color="white" label="Ver Histórico" :disabled="!selected[0]"  v-on:click="verHistorico"/>
+      <q-btn id="historico" text-color="black" color="green" label="Executar" :disabled="!selected[0]"  v-on:click="executarProcesso"/>
     </div>
     <q-dialog
       v-model="showDialog"
@@ -46,8 +47,6 @@
       </q-card>
     </q-dialog>
   </q-page>
-
-  {{selected}}
 </template>
 
 <style>
@@ -100,13 +99,31 @@ export default defineComponent({
       this.showDialog = true;
     },
 
+    executarProcesso() {
+      axios
+        .post(`https://localhost:44306/api/Processo/${this.selected[0].identificador}/executar`, null)
+        .then(response => {
+          if (response.data.possuiErro) {
+            Notify.create({
+              type: 'negative',
+              message: response.data.mensagemErro
+            });
+          } else {
+            Notify.create({
+              type: 'positive',
+              message: 'Processo criado com sucesso.'
+            });
+          }
+        });
+    },
+
     adicionarNovo() {
       Dialog.create({
         title: 'Adicionar Processo',
         message: 'Qual o tamanho do processo em bytes?',
         prompt: {
           model: '',
-          type: 'number' // optional
+          type: 'number'
         },
         cancel: true,
         persistent: true
@@ -115,10 +132,10 @@ export default defineComponent({
         .post('https://localhost:44306/api/Processo', {
           tamanho: data
         }).then(response => {
-          if (response.data.PossuiErro) {
+          if (response.data.possuiErro) {
             Notify.create({
               type: 'negative',
-              message: response.data.MensagemErro
+              message: response.data.mensagemErro
             });
           } else {
             Notify.create({

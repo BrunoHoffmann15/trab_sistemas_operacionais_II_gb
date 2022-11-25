@@ -44,7 +44,9 @@ namespace SistemasOperacionais.ControleMemoria.Api
                                   policy =>
                                   {
                                       policy.WithOrigins("http://localhost:8080",
-                                                          "http://localhost:*");
+                                                  "http://localhost:*")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
                                   });
             });
         }
