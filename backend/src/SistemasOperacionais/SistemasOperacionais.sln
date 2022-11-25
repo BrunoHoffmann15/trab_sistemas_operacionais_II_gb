@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemasOperacionais.ControleMemoria", "SistemasOperacionais.ControleMemoria\SistemasOperacionais.ControleMemoria.csproj", "{6660A86C-D53A-4A49-B4AC-5E353774C56B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemasOperacionais.ControleMemoria.UnitTests", "SistemasOperacionais.ControleMemoria.UnitTests\SistemasOperacionais.ControleMemoria.UnitTests.csproj", "{1A89D4B2-14C1-4DDF-A5F0-9C192F9A4BD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemasOperacionais.ControleMemoria.UnitTests", "SistemasOperacionais.ControleMemoria.UnitTests\SistemasOperacionais.ControleMemoria.UnitTests.csproj", "{1A89D4B2-14C1-4DDF-A5F0-9C192F9A4BD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemasOperacionais.ControleMemoria.Api", "SistemasOperacionais.ControleMemoria.Api\SistemasOperacionais.ControleMemoria.Api.csproj", "{576729B0-5FA9-40DE-9B06-6110C5CB9B8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1A89D4B2-14C1-4DDF-A5F0-9C192F9A4BD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A89D4B2-14C1-4DDF-A5F0-9C192F9A4BD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A89D4B2-14C1-4DDF-A5F0-9C192F9A4BD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{576729B0-5FA9-40DE-9B06-6110C5CB9B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{576729B0-5FA9-40DE-9B06-6110C5CB9B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{576729B0-5FA9-40DE-9B06-6110C5CB9B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{576729B0-5FA9-40DE-9B06-6110C5CB9B8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

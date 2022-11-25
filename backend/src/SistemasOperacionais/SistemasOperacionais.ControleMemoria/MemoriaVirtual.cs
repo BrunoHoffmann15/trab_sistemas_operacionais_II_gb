@@ -1,24 +1,29 @@
-﻿using System;
+﻿using SistemasOperacionais.ControleMemoria.Exceptions;
+using System;
 
 namespace SistemasOperacionais.ControleMemoria
 {
     public class MemoriaVirtual
     {
-        private readonly Pagina[] _paginas;
+        public Pagina[] Paginas { get; private set; }
 
         private int indiceUltimaPagina;
         
         public int Tamanho { get; private set; }
+
         public int QuantidadePaginas { get; private set; }
+
+        public int PaginasUsadas { get; private set; }
 
 
         public MemoriaVirtual(int tamanho) 
         {
             Tamanho = tamanho;
             QuantidadePaginas = Pagina.ObterQuantidadePaginasPorTamanho(tamanho);
+            PaginasUsadas = 0;
 
             indiceUltimaPagina = -1;
-            _paginas = new Pagina[QuantidadePaginas];
+            Paginas = new Pagina[QuantidadePaginas];
         }
 
         public void AdicionarProcesso(Processo processo) 
@@ -26,23 +31,26 @@ namespace SistemasOperacionais.ControleMemoria
             var paginasProcesso = processo.CriarPaginas();
 
             if (!PossuiPaginasSuficientes(processo.QuantidadePaginas))
-                throw new Exception("Memória virtual não possui espaço suficiente.");
+                throw new DomainException("Memória virtual não possui espaço suficiente.");
 
             foreach (Pagina p in paginasProcesso)
-                _paginas[++indiceUltimaPagina] = p;
+            {
+                Paginas[++indiceUltimaPagina] = p;
+                PaginasUsadas++;
+            }
         }
 
         public int ObterIndicePagina(string identificadorPagina) 
         {
-            for (int i = 0; i < _paginas.Length; i++)
-                if (_paginas[i].Identificador == identificadorPagina) return i;
+            for (int i = 0; i < Paginas.Length; i++)
+                if (Paginas[i].Identificador == identificadorPagina) return i;
 
             return 0;
         }
 
         public Pagina ObterPagina(int indicePagina) 
         {
-            return _paginas[indicePagina];
+            return Paginas[indicePagina];
         }
 
         public int ObterQuantidadePaginasUsadas() => indiceUltimaPagina + 1;

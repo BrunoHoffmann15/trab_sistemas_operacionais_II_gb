@@ -1,4 +1,5 @@
 ﻿using SistemasOperacionais.ControleMemoria.Constants;
+using SistemasOperacionais.ControleMemoria.Exceptions;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +18,7 @@ namespace SistemasOperacionais.ControleMemoria
         public Processo(int tamanho)
         {
             if (tamanho > MemoriaConstants.TamanhoMemoriaVirtual)
-                throw new Exception("Processo ultrapassa tamanho de 1MB");
+                throw new DomainException("Processo ultrapassa tamanho de 1MB");
 
             Tamanho = tamanho;
             Identificador = (++_identificador).ToString();
@@ -53,7 +54,7 @@ namespace SistemasOperacionais.ControleMemoria
 
         public string ObterPaginaAleatoria()
         {
-            int indicePagina = (new Random()).Next(0, QuantidadePaginas - 1);
+            int indicePagina = (new Random()).Next(0, QuantidadePaginas);
             return IdentificadorPaginas[indicePagina];
         }
     }

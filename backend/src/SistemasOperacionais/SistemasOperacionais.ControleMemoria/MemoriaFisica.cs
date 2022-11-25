@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SistemasOperacionais.ControleMemoria
+﻿namespace SistemasOperacionais.ControleMemoria
 {
     public class MemoriaFisica
     {
@@ -8,12 +6,12 @@ namespace SistemasOperacionais.ControleMemoria
         public int QuantidadePaginas { get; private set; }
         public Pagina[] Paginas { get; private set; }
 
-        private readonly Queue<int> _paginas = new();
         private int indiceFilaPrimeiroAtual = 0;
 
         public MemoriaFisica(int tamanho)
         {
             indiceFilaPrimeiroAtual = 0;
+            Tamanho = tamanho;
 
             QuantidadePaginas = Pagina.ObterQuantidadePaginasPorTamanho(tamanho);
             Paginas = new Pagina[QuantidadePaginas];
